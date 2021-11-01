@@ -1,9 +1,8 @@
 package com.swoqe.processor.processor;
 
-import com.swoqe.data.Book;
+import com.swoqe.data.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.streams.kstream.KStream;
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +18,7 @@ public class BookKafkaProcessor {
             log.info("Filtering: [{}] id: [{}]", book.getVolumeInfo().getTitle(), book.getId());
             return true;
         });
-
     }
+
+
 }

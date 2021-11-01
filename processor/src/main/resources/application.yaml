@@ -3,9 +3,9 @@ spring.cloud.stream:
     definition: bookProcessor
   bindings:
     bookProcessor-in-0:
-      destination: raw-books
+      destination: "${BOOK_PROCESSOR_IN:raw-books}"
     bookProcessor-out-0:
-      destination: books
+      destination: "${BOOK_PROCESSOR_OUT:books}"
   kafka:
     bindings:
       bookProcessor-in-0:
@@ -19,6 +19,6 @@ spring.cloud.stream:
             value:
               serializer: org.springframework.kafka.support.serializer.JsonSerializer
     binder:
-      brokers:
-        - localhost:9091
-        - localhost:9092
+      brokers: "${KAFKA_BROKERS:localhost:9092}"
+server:
+  port: "${SERVER_PORT:8080}"

@@ -21,15 +21,3 @@ public class VolumeInfo {
     private String language;
 }
 
-@Data
-class IndustryIdentifier {
-    private String type;
-    private String identifier;
-
-}
-
-@Data
-class ImageLinks {
-    private String smallThumbnail;
-    private String thumbnail;
-}
