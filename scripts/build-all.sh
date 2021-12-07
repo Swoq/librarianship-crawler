@@ -1,4 +1,4 @@
 #!/bin/sh
-docker build -t swoqe/librarianship-crawler -f ./crawler/Dockerfile .
-docker build -t swoqe/librarianship-processor -f ./processor/Dockerfile .
-docker build -t swoqe/librarianship-consumer -f ./consumer/Dockerfile .
+(cd crawler && mvn compile jib:build)
+(cd consumer && mvn compile jib:build)
+(cd processor && mvn compile jib:build)

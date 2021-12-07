@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: processor
+  template:
+    metadata:
+      name: processor-pod
+      labels:
+        component: processor
+    spec:
+      containers:
+        - name: processor-container
+          image: swoqe/librarianship-processor
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_BROKERS
+              value: "kafka:9092"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: processor-cluster-ip
+spec:
+  type: ClusterIP
+  selector:
+    component: processor
+  ports:
+    - port: 8080
+      targetPort: 8080
