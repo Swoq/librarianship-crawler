@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crawler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: crawler
+  template:
+    metadata:
+      name: crawler-pod
+      labels:
+        component: crawler
+    spec:
+      containers:
+        - name: crawler-container
+          image: swoqe/librarianship-crawler
+          ports:
+            - containerPort: 8080
+          env:
+            - name: VAULT_URI
+              value: "http://vault:8200"
+            - name: VAULT_TOKEN
+              value: "s.stKoCwiFuCzWC5Q0nLBc3vtN"
+            - name: KAFKA_HOST
+              value: "kafka:9092"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crawler-cluster-ip
+spec:
+  type: ClusterIP
+  selector:
+    component: crawler
+  ports:
+    - port: 8080
+      targetPort: 8080

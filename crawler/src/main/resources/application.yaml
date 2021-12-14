@@ -1,0 +1,10 @@
+crawler:
+  enabled: "${CRAWLER_ENABLED:true}"
+google:
+  api_key: "${GOOGLE_API_KEY:}"
+  api_uri: "${GOOGLE_API_URI:https://www.googleapis.com/books/v1/volumes}"
+kafka:
+  host: "${KAFKA_HOST:localhost:9092}"
+  out_topic: "${KAFKA_OUT_TOPIC:raw-books}"
+server:
+  port: "${SERVER_PORT:8080}"

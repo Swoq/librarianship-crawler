@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: consumer
+  template:
+    metadata:
+      name: consumer-pod
+      labels:
+        component: consumer
+    spec:
+      containers:
+        - name: consumer-container
+          image: swoqe/librarianship-consumer
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://cluster-ip-service-postgres:5432/postgres"
+            - name: KAFKA_BROKERS
+              value: "kafka:9092"
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumer-cluster-ip
+spec:
+  type: ClusterIP
+  selector:
+    component: consumer
+  ports:
+    - port: 8080
+      targetPort: 8080

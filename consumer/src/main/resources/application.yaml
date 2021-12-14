@@ -1,0 +1,29 @@
+spring.cloud.stream:
+  function:
+    definition: bookService
+  bindings:
+    bookService-in-0:
+      destination: "${BOOK_SERVICE_IN:books}"
+  kafka:
+    bindings:
+      bookService-in-0:
+        consumer:
+          configuration:
+            value:
+              deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    binder:
+      brokers: "${KAFKA_BROKERS:localhost:9092}"
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: "${SPRING_DATA_SOURCE_USERNAME:postgres}"
+    password: "${SPRING_DATA_SOURCE_PASSWORD:1}"
+    url: "${SPRING_DATA_SOURCE_URL:jdbc:postgresql://localhost:5432/librarianship}"
+
+  jpa:
+    hibernate:
+      ddl-auto: "${SPRING_JPA_HIBERNATE_DDL_AUTO:update}"
