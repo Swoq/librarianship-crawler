@@ -7,3 +7,19 @@ using server-side template processing, [Thymeleaf](https://www.thymeleaf.org/).
 
 ![alt text](crawler.png)
 ![alt text](librarianship.png)
+
+
+- `chmod -x ./scripts/build-all.sh`
+- `./scripts/build-all.sh`
+- `kubectl create secret generic pgpassword --from-literal=PGPASSWORD=1`
+- `minikube addons enable ingress `
+
+- `minikube addons enable metrics-server`
+- `helm install --namespace monitoring prometheus prometheus-community/kube-prometheus-stack`
+- `kubectl port-forward --namespace monitoring service/prometheus-grafana 3000:80`
+- `kubectl get secret --namespace monitoring prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
+
+- `kubectl apply k8s/`
+- `kubectl apply k8s/postgres`
+- `kubectl apply k8s/kafka`
+- `kubectl apply k8s/app`

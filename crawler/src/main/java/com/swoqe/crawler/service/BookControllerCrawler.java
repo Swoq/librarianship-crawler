@@ -36,26 +36,25 @@ import java.util.Optional;
 @Slf4j
 public class BookControllerCrawler {
 
-
     @Value("${google.api_uri}")
     private String GOOGLE_API_URI;
 
+    @Value("${google.api_key}")
     private String apiKey;
 
     @Value("${kafka.out_topic}")
     private String KAFKA_TOPIC;
 
-    private final VaultTemplate vaultTemplate;
     private final KafkaTemplate<String, Book> kafkaTemplate;
 
-    @PostConstruct
-    private void init() {
-        VaultResponse response = vaultTemplate.read("secret/data/crawler");
-        Map<String, Object> data1 = Optional.ofNullable(response).orElseThrow(IllegalStateException::new).getData();
-        LinkedHashMap<String, Object> data2 = (LinkedHashMap<String, Object>) data1.get("data");
-
-        apiKey = (String) Optional.ofNullable(data2).map(map -> map.get("api_key")).orElse(null);
-    }
+//    @PostConstruct
+//    private void init() {
+//        VaultResponse response = vaultTemplate.read("secret/data/crawler");
+//        Map<String, Object> data1 = Optional.ofNullable(response).orElseThrow(IllegalStateException::new).getData();
+//        LinkedHashMap<String, Object> data2 = (LinkedHashMap<String, Object>) data1.get("data");
+//
+//        apiKey = (String) Optional.ofNullable(data2).map(map -> map.get("api_key")).orElse(null);
+//    }
 
     @GetMapping("/crawl")
     @ResponseStatus(HttpStatus.OK)
